@@ -1,12 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { COUNTRYService } from '../API/country.service';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
 
-  constructor() {}
-
+paises: any[] = [];
+errorMessage = '';
+filtro: any[] = [];
+filteredProducts: any[] = [];
+  constructor(private countryService: COUNTRYService  ) {}
+  ngOnInit(){
+    this.countryService.obtenerPaises().subscribe(
+      paises => {
+        this.paises = paises;
+      }, error => this.errorMessage = <any> error
+    );
+    console.log(this.paises);
+  }
 }
